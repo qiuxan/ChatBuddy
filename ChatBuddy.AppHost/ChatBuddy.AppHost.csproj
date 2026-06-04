@@ -12,4 +12,8 @@
       <ProjectReference Include="..\ChatAPI\ChatAPI.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Aspire.Hosting.Ollama" Version="13.4.0" />
+    </ItemGroup>
+
 </Project>
