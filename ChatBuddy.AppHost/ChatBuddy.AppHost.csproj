@@ -8,4 +8,8 @@
         <UserSecretsId>0856ddb5-8d79-4d96-9273-b0935a0acb9e</UserSecretsId>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ChatAPI\ChatAPI.csproj" />
+    </ItemGroup>
+
 </Project>
