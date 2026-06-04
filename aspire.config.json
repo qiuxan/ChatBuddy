@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "ChatBuddy.AppHost/ChatBuddy.AppHost.csproj"
+  }
+}

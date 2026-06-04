@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBuddy.AppHost", "ChatBuddy.AppHost\ChatBuddy.AppHost.csproj", "{58DEEB58-431F-4FC2-A566-C1BD9844A98E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBuddy.ServiceDefaults", "ChatBuddy.ServiceDefaults\ChatBuddy.ServiceDefaults.csproj", "{42FA4ABA-B280-4ACF-90ED-3A86EEAF2B5D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58DEEB58-431F-4FC2-A566-C1BD9844A98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58DEEB58-431F-4FC2-A566-C1BD9844A98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58DEEB58-431F-4FC2-A566-C1BD9844A98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58DEEB58-431F-4FC2-A566-C1BD9844A98E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42FA4ABA-B280-4ACF-90ED-3A86EEAF2B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42FA4ABA-B280-4ACF-90ED-3A86EEAF2B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42FA4ABA-B280-4ACF-90ED-3A86EEAF2B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42FA4ABA-B280-4ACF-90ED-3A86EEAF2B5D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

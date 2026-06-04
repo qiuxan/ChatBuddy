@@ -1,0 +1,103 @@
+## .NET
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+nuget.config
+
+# MSBuild
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Publish output
+**/publish/
+PublishProfiles/
+
+# User-specific files
+*.rsuser
+*.pidb
+*.polytest
+*.pdb
+
+# Crash dumps
+*.dmp
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+TestResult.xml
+*.trx
+*.coverage
+*.coveragexml
+
+# BenchmarkDotNet
+BenchmarkDotNet.Artifacts/
+
+## SQLite
+*.db
+*.db-shm
+*.db-wal
+
+## ASP.NET
+
+# Bundled assets
+bundleconfig.json
+
+# Secrets
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+secrets.json
+*.pfx
+*.p12
+# AI docs
+/sample
+/CLAUDE.md
+/plan.md
+## macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+## Docker
+*.env
+.env.*
