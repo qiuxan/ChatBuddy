@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBuddy.ServiceDefaults",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI", "ChatAPI\ChatAPI.csproj", "{2D72C33E-AEB3-4CDA-886B-9FE9C78BB016}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IngestionService", "IngestionService\IngestionService.csproj", "{6150FA7B-76A0-4CB5-925B-D1F2A9878F8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{2D72C33E-AEB3-4CDA-886B-9FE9C78BB016}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D72C33E-AEB3-4CDA-886B-9FE9C78BB016}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D72C33E-AEB3-4CDA-886B-9FE9C78BB016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6150FA7B-76A0-4CB5-925B-D1F2A9878F8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6150FA7B-76A0-4CB5-925B-D1F2A9878F8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6150FA7B-76A0-4CB5-925B-D1F2A9878F8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6150FA7B-76A0-4CB5-925B-D1F2A9878F8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

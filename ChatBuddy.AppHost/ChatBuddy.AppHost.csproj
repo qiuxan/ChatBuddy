@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ChatAPI\ChatAPI.csproj" />
+      <ProjectReference Include="..\IngestionService\IngestionService.csproj" />
     </ItemGroup>
 
     <ItemGroup>

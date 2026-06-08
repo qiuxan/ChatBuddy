@@ -17,4 +17,6 @@ builder
 builder.AddProject<Projects.ChatAPI>("ChatAPI")
     .WithReference(chatModel);
 
+builder.AddProject<Projects.IngestionService>("IngestionService");
+
 builder.Build().Run();
