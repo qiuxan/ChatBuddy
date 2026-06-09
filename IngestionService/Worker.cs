@@ -17,46 +17,60 @@ public class Worker(
     const string trackingFilePath = "tracking.txt";
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-
         var directoryInfo = new DirectoryInfo("incident_dataset");
+        logger.LogInformation("Working directory: {dir}", Directory.GetCurrentDirectory());
+        logger.LogInformation("incident_dataset exists: {exists}", directoryInfo.Exists);
+
         await File.Create(trackingFilePath).DisposeAsync();
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            var processedFiles = (await File.ReadAllLinesAsync(trackingFilePath, stoppingToken)).ToHashSet();
-
-            var filesProcess = directoryInfo.EnumerateFiles("*.md")
-                .Where(file => !processedFiles.Contains(file.FullName) );
-            
-            if (logger.IsEnabled(LogLevel.Information))
+            try
             {
+                var processedFiles = (await File.ReadAllLinesAsync(trackingFilePath, stoppingToken)).ToHashSet();
+
+                var filesProcess = directoryInfo.EnumerateFiles("*.md")
+                    .Where(file => !processedFiles.Contains(file.FullName))
+                    .ToList();
+
                 logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 logger.LogInformation("Files to process: {files}", string.Join(',', filesProcess.Select(x => x.Name)));
-            }
 
-            using var vectorStoreWriter = new VectorStoreWriter<string>(vectorStore,384, new VectorStoreWriterOptions
-            {
-                CollectionName ="data-icm-chunks",
-                DistanceFunction = DistanceFunction.CosineDistance,
-                IncrementalIngestion = true
-                
-            });
-            var pipeline = new IngestionPipeline<string>(
-                reader:new IncReader(),
-                chunker:new SemanticSimilarityChunker(embeddingGenerator, new IngestionChunkerOptions(TiktokenTokenizer.CreateForModel("gpt-4o"))),
-                writer:vectorStoreWriter,
-                loggerFactory: loggerFactory
-            );
-
-            await foreach (var result in pipeline.ProcessAsync(filesProcess, stoppingToken))
-            {
-                if (!result.Succeeded)
+                if (filesProcess.Count == 0)
                 {
-                    logger.LogError("Failed to process: {filesId} ",result.DocumentId);
+                    logger.LogInformation("No new files to process.");
+                    await Task.Delay(5000, stoppingToken);
+                    continue;
                 }
-            }
 
-            await File.AppendAllLinesAsync(trackingFilePath, filesProcess.Select(_ => _.FullName), stoppingToken);
+                using var vectorStoreWriter = new VectorStoreWriter<string>(vectorStore, 384, new VectorStoreWriterOptions
+                {
+                    CollectionName = "data-icm-chunks",
+                    DistanceFunction = DistanceFunction.CosineDistance,
+                    IncrementalIngestion = false
+                });
+
+                var pipeline = new IngestionPipeline<string>(
+                    reader: new IncReader(),
+                    chunker: new SemanticSimilarityChunker(embeddingGenerator, new IngestionChunkerOptions(TiktokenTokenizer.CreateForModel("gpt-4o"))),
+                    writer: vectorStoreWriter,
+                    loggerFactory: loggerFactory
+                );
+
+                await foreach (var result in pipeline.ProcessAsync(filesProcess, stoppingToken))
+                {
+                    if (result.Succeeded)
+                        logger.LogInformation("Processed: {fileId}", result.DocumentId);
+                    else
+                        logger.LogError("Failed to process: {filesId}", result.DocumentId);
+                }
+
+                await File.AppendAllLinesAsync(trackingFilePath, filesProcess.Select(f => f.FullName), stoppingToken);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                logger.LogError(ex, "Error during ingestion pipeline execution");
+            }
 
             await Task.Delay(1000, stoppingToken);
         }
