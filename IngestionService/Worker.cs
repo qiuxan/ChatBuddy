@@ -1,9 +1,18 @@
 using System.Diagnostics;
+using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DataIngestion;
+using Microsoft.Extensions.DataIngestion.Chunkers;
+using Microsoft.Extensions.VectorData;
+using Microsoft.ML.Tokenizers;
 
 namespace IngestionService;
 
-public class Worker(ILoggerFactory loggerFactory,ILogger<Worker> logger) : BackgroundService
+public class Worker(
+    ILoggerFactory loggerFactory,
+    ILogger<Worker> logger,
+    IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator,
+    VectorStore vectorStore
+    ) : BackgroundService
 {
     const string trackingFilePath = "tracking.txt";
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -25,12 +34,19 @@ public class Worker(ILoggerFactory loggerFactory,ILogger<Worker> logger) : Backg
                 logger.LogInformation("Files to process: {files}", string.Join(',', filesProcess.Select(x => x.Name)));
             }
 
+            using var vectorStoreWriter = new VectorStoreWriter<string>(vectorStore,384, new VectorStoreWriterOptions
+            {
+                CollectionName ="data-icm-chunks",
+                DistanceFunction = DistanceFunction.CosineDistance,
+                IncrementalIngestion = true
+                
+            });
             var pipeline = new IngestionPipeline<string>(
                 reader:new IncReader(),
-                chunker:null,
-                writer:null,
+                chunker:new SemanticSimilarityChunker(embeddingGenerator, new IngestionChunkerOptions(TiktokenTokenizer.CreateForModel("gpt-4o"))),
+                writer:vectorStoreWriter,
                 loggerFactory: loggerFactory
-                );
+            );
 
             await foreach (var result in pipeline.ProcessAsync(filesProcess, stoppingToken))
             {
