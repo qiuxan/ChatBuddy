@@ -1,8 +1,12 @@
 using ChatAPI;
+using ChatAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+
+string sqliteConnectionString = builder.Configuration.GetConnectionString("vector-store")?? throw new InvalidCastException("The connection string was not provided.");
+builder.Services.AddSqliteCollection<string, DocChunk>("data-icm-chunks",sqliteConnectionString);
 
 // Add services to the container.
 
